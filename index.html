@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>How AI Sees You</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Live computer perception</p>
+          <h1>How AI Sees You</h1>
+        </div>
+        <div class="metrics" aria-label="Frame metrics">
+          <span id="cameraStatus">demo</span>
+          <span id="resolutionLabel">640 x 400</span>
+          <span id="fpsLabel">24 fps</span>
+        </div>
+      </header>
+
+      <section class="workbench" aria-label="Computer vision teaching workbench">
+        <section class="vision-card" aria-label="Live vision view">
+          <div class="lesson-rail" aria-label="Guided lesson steps">
+            <button class="lesson-step active" type="button" data-lesson="0">1 Pixels</button>
+            <button class="lesson-step" type="button" data-lesson="1">2 Matrix</button>
+            <button class="lesson-step" type="button" data-lesson="2">3 Edges</button>
+            <button class="lesson-step" type="button" data-lesson="3">4 Vector</button>
+            <button class="lesson-step" type="button" data-lesson="4">5 Model</button>
+          </div>
+          <div class="video-wrap">
+            <video id="camera" autoplay playsinline muted></video>
+            <canvas id="snapshotCanvas"></canvas>
+            <canvas id="overlayCanvas"></canvas>
+            <div class="click-marker" id="clickMarker" aria-hidden="true"></div>
+            <div class="stage-hint">
+              <span>Click any contour</span>
+              <strong>inspect pixel data</strong>
+            </div>
+          </div>
+          <div class="control-bar" aria-label="Camera controls">
+            <button id="startCamera" type="button">Start Camera</button>
+            <button id="captureFrame" type="button" disabled>Freeze</button>
+            <button id="demoFrame" type="button">Demo</button>
+            <button id="liveAnalysis" class="active" type="button">Live</button>
+          </div>
+        </section>
+
+        <aside class="inspector" aria-label="Current explanation and chat">
+          <section class="now-card">
+            <span class="kicker">Current layer</span>
+            <h2 id="layerTitle">Contours from pixel change</h2>
+            <p id="layerCopy">
+              Bright numbers appear where neighboring pixels change sharply. Those places are likely
+              boundaries: face outline, shoulders, hair, hands, or clothing edges.
+            </p>
+            <div class="formula" id="formulaBox">edge(x,y) = |I(x,y)-I(x+1,y)| + |I(x,y)-I(x,y+1)|</div>
+            <div class="mini-vector" id="miniVector"></div>
+          </section>
+
+          <section class="chat-card" aria-label="Ask for explanation">
+            <details>
+              <summary>
+                <span>
+                  <span class="kicker">Optional</span>
+                  <strong>Ask for a deeper explanation</strong>
+                </span>
+              </summary>
+              <div class="chat-body">
+                <div class="quick-prompts" aria-label="Suggested questions">
+                  <button type="button" data-prompt="Explain the matrix">Matrix</button>
+                  <button type="button" data-prompt="What are the edge numbers?">Edges</button>
+                  <button type="button" data-prompt="Explain the vector">Vector</button>
+                  <button type="button" data-prompt="Explain this frame mathematically">Math</button>
+                </div>
+                <div class="resource-strip" aria-label="Detailed learning links">
+                  <a href="https://www.tensorflow.org/tutorials/images/cnn" target="_blank" rel="noreferrer">CNNs</a>
+                  <a href="https://developers.google.com/machine-learning/crash-course/embeddings" target="_blank" rel="noreferrer">Embeddings</a>
+                  <a href="https://distill.pub/2017/feature-visualization/" target="_blank" rel="noreferrer">Feature Viz</a>
+                  <a href="https://cs231n.github.io/convolutional-networks/" target="_blank" rel="noreferrer">CS231n</a>
+                </div>
+                <div class="chat-log" id="chatLog" aria-live="polite"></div>
+                <form class="chat-form" id="chatForm">
+                  <input
+                    id="chatInput"
+                    name="question"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Ask about pixels, vectors, RGB, edges..."
+                  />
+                  <button type="submit">Ask</button>
+                </form>
+              </div>
+            </details>
+          </section>
+        </aside>
+      </section>
+
+      <details class="technical-drawer">
+        <summary>
+          <span>
+            <span class="kicker">Optional</span>
+            <strong>Show technical readout</strong>
+          </span>
+        </summary>
+        <section class="learning" aria-label="Detailed explanation from this frame">
+          <article class="lesson-panel main-lesson">
+            <div class="panel-title">
+              <span class="kicker">Based on this frame</span>
+              <h2>What the computer is reading</h2>
+            </div>
+            <div class="lesson-list" id="lessonList"></div>
+          </article>
+
+          <article class="lesson-panel">
+            <div class="panel-title">
+              <span class="kicker">Matrix sample</span>
+              <h2>Pixel Matrix</h2>
+              <span id="tensorShape">shape: H x W x 3</span>
+            </div>
+            <canvas id="pixelCanvas" width="520" height="300"></canvas>
+            <div class="matrix-readout" id="matrixReadout"></div>
+          </article>
+
+          <article class="lesson-panel">
+            <div class="panel-title">
+              <span class="kicker">Feature vector</span>
+              <h2>Embedding Sketch</h2>
+              <span id="confidenceLabel">signal: --</span>
+            </div>
+            <div class="vector-bars" id="vectorBars"></div>
+            <pre class="vector-code" id="vectorCode">v = [waiting_for_frame]</pre>
+            <div class="concept-meter">
+              <div class="meter-fill" id="confidenceFill"></div>
+            </div>
+          </article>
+        </section>
+      </details>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
