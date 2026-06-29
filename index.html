@@ -11,11 +11,17 @@
       <header class="app-header">
         <div class="brand-block">
           <div class="brand-mark" aria-hidden="true">AI</div>
-          <p class="eyebrow">Live computer perception</p>
+          <p class="eyebrow">Friendly AI learning lab</p>
           <h1>How AI Sees You</h1>
           <p class="header-copy">
-            A live visual lab that turns one camera frame into pixels, edges, vectors, and an AI tutor explanation.
+            Explore computer vision like a visual game: one frame becomes colors,
+            patterns, vectors, and a simple tutor explanation.
           </p>
+          <div class="learner-badges" aria-label="Learning promises">
+            <span>No coding needed</span>
+            <span>Demo works without camera</span>
+            <span>Ask the tutor anytime</span>
+          </div>
         </div>
         <div class="metrics" aria-label="Frame metrics">
           <span><strong>Status</strong><em id="cameraStatus">demo</em></span>
@@ -23,6 +29,29 @@
           <span><strong>Rate</strong><em id="fpsLabel">24 fps</em></span>
         </div>
       </header>
+
+      <section class="journey-strip" aria-label="Learning journey">
+        <div>
+          <span>1</span>
+          <strong>Discover</strong>
+          <em>See what the frame contains as data.</em>
+        </div>
+        <div>
+          <span>2</span>
+          <strong>Play</strong>
+          <em>Click edges and watch values change.</em>
+        </div>
+        <div>
+          <span>3</span>
+          <strong>Ask</strong>
+          <em>Let the tutor explain the confusing parts.</em>
+        </div>
+        <div>
+          <span>4</span>
+          <strong>Understand</strong>
+          <em>Connect pixels to real AI model logic.</em>
+        </div>
+      </section>
 
       <section class="workbench" aria-label="Computer vision teaching workbench">
         <section class="vision-card" aria-label="Live vision view">
@@ -39,8 +68,8 @@
             <canvas id="overlayCanvas"></canvas>
             <div class="click-marker" id="clickMarker" aria-hidden="true"></div>
             <div class="stage-hint">
-              <span>Click any contour</span>
-              <strong>inspect pixel data</strong>
+              <span>Try it</span>
+              <strong>click a bright edge</strong>
             </div>
           </div>
           <div class="control-bar" aria-label="Camera controls">
@@ -68,8 +97,8 @@
               <span class="kicker">AI Agent</span>
               <h2>Vision Tutor Agent</h2>
               <p>
-                The tutor turns the current frame analysis into a clear explanation of pixels,
-                matrices, edges, vectors, and model logic.
+                The tutor turns the current frame into a friendly explanation, so the
+                numbers feel like clues instead of a wall of math.
               </p>
             </div>
             <div class="workflow-strip" aria-label="Input process output workflow">

@@ -1,14 +1,14 @@
 # How AI Sees You
 
-How AI Sees You is an interactive computer vision learning app. It helps beginners understand how an AI system can read an image by turning a camera frame into pixels, RGB values, matrix data, edge signals, feature vectors, and model logic.
+How AI Sees You is a friendly interactive computer vision learning app. It helps beginners enjoy the process of understanding AI by turning a camera frame into colors, patterns, matrix data, edge signals, feature vectors, and a simple tutor explanation.
 
 ## Problem
 
-Computer vision is difficult to understand because most tools only show the final prediction. Students rarely see the hidden steps between a camera image and an AI model output.
+Computer vision is difficult to understand because most tools only show the final prediction. Students rarely see the hidden steps between a camera image and an AI model output, so AI can feel intimidating or mysterious.
 
 ## Solution
 
-This app makes the process visible. Users can start their camera or use a demo frame, inspect pixel data, see edge/contour signals, explore a matrix sample, and ask the built-in AI Vision Tutor for explanations.
+This app makes the process visible and approachable. Users can start their camera or use a demo frame, inspect pixel data, see edge/contour signals, explore a matrix sample, and ask the built-in AI Vision Tutor for beginner-friendly explanations.
 
 ## Core Features
 

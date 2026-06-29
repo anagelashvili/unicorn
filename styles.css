@@ -167,6 +167,24 @@ h1 {
   line-height: 1.35;
 }
 
+.learner-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+  padding-bottom: 14px;
+}
+
+.learner-badges span {
+  border: 1px solid rgba(17, 19, 18, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.78);
+  color: var(--ink);
+  padding: 8px 11px;
+  font-size: 0.78rem;
+  font-weight: 780;
+}
+
 .metrics {
   display: grid;
   grid-template-columns: 1fr;
@@ -212,6 +230,49 @@ h1 {
   grid-template-columns: minmax(0, 1fr) minmax(350px, 430px);
   gap: 18px;
   align-items: stretch;
+}
+
+.journey-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.journey-strip div {
+  min-height: 96px;
+  border: 1px solid rgba(17, 19, 18, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 253, 248, 0.76);
+  box-shadow: var(--soft-shadow);
+  padding: 14px;
+}
+
+.journey-strip span {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--cyan);
+  color: var(--paper);
+  display: grid;
+  place-items: center;
+  font-size: 0.78rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.journey-strip strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.journey-strip em {
+  color: var(--muted);
+  display: block;
+  font-size: 0.84rem;
+  font-style: normal;
+  line-height: 1.32;
 }
 
 .vision-card {
@@ -261,7 +322,7 @@ h1 {
   z-index: 2;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(7, 8, 7, 0.18), transparent 24%, rgba(7, 8, 7, 0.34)),
+    linear-gradient(180deg, rgba(7, 8, 7, 0.08), transparent 24%, rgba(7, 8, 7, 0.22)),
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 5px);
 }
 
@@ -414,6 +475,7 @@ video,
   display: grid;
   gap: 14px;
   background:
+    radial-gradient(circle at top right, rgba(0, 168, 137, 0.28), transparent 34%),
     linear-gradient(135deg, rgba(17, 19, 18, 0.96), rgba(17, 19, 18, 0.88)),
     var(--black);
   border-color: rgba(17, 19, 18, 0.65);
@@ -823,6 +885,10 @@ video,
     grid-template-columns: 1fr;
   }
 
+  .journey-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .metrics {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -871,8 +937,13 @@ video,
   }
 
   .metrics,
-  .matrix-readout {
+  .matrix-readout,
+  .journey-strip {
     grid-template-columns: 1fr;
+  }
+
+  .journey-strip div {
+    min-height: auto;
   }
 
   .video-wrap {

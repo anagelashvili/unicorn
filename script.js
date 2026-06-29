@@ -50,36 +50,36 @@ let selectedPoint = null;
 const stages = [
   {
     key: "pixels",
-    title: "Contours from pixel change",
-    copy: "Click the image. The tutor will sample one pixel and show its RGB values, brightness, and edge score.",
+    title: "Start with tiny color clues",
+    copy: "Click the image. The tutor will pick one pixel and show the color numbers hidden inside it.",
     formula: "I[y][x] = [R, G, B]",
   },
   {
     key: "matrix",
-    title: "Your frame is a 3D matrix",
+    title: "The frame becomes a color grid",
     copy:
-      "The camera does not begin with meaning. It begins with a tensor: height by width by three color channels.",
+      "Before AI understands meaning, it sees a neat grid: rows, columns, and three color channels.",
     formula: "frame.shape = [height, width, 3]",
   },
   {
     key: "edges",
-    title: "Edges are local differences",
+    title: "Edges are where things change",
     copy:
-      "The contour numbers mark places where nearby pixels differ. That is the first useful hint of face, hand, shoulder, and clothing boundaries.",
+      "The bright numbers appear where nearby pixels are different. Those changes help AI notice outlines and shapes.",
     formula: "edge(x,y) = |I(x,y)-I(x+1,y)| + |I(x,y)-I(x,y+1)|",
   },
   {
     key: "vector",
-    title: "RGB becomes normalized input",
+    title: "Patterns become a short number list",
     copy:
-      "Features from the frame are compressed into a vector: a list of coordinates that summarizes this frame numerically.",
+      "The app compresses the frame into a vector, which is like a tiny numeric summary of what the image looks like.",
     formula: "v = normalize(features(I))",
   },
   {
     key: "model",
-    title: "Features compress into a vector",
+    title: "A model can compare the pattern",
     copy:
-      "A real model compares the vector with learned patterns. This is where classification, captions, or richer explanations would begin.",
+      "A real AI model would compare this vector with patterns it learned before, then create a label or explanation.",
     formula: "prediction = softmax(Wv + b)",
   },
 ];
@@ -106,7 +106,7 @@ async function startCamera() {
     setStatus("blocked");
     layerTitle.textContent = "Camera blocked";
     layerCopy.textContent =
-      "Open this page from localhost and allow camera access, or use Demo. The demo is shaped like a person so contours are still visible.";
+      "No stress. You can use Demo mode instead, and the learning experience still works.";
     console.error(error);
   }
 }
@@ -589,10 +589,10 @@ function samplePixel(imageData, x, y) {
 function explainClickedSample(sample) {
   const edgeMeaning =
     sample.edge > 90
-      ? "That is a strong contour. The pixel probably sits on a boundary between two visual regions."
+      ? "That is a strong visual clue. This pixel is probably sitting where one shape changes into another."
       : sample.edge > 45
-        ? "That is a medium contour. There is some local change, but it is not the strongest boundary."
-        : "That is a low contour. Nearby pixels are fairly similar, so the model sees this as a smoother area.";
+        ? "That is a medium clue. The nearby pixels are changing a little, but not dramatically."
+        : "That is a calm area. Nearby pixels are similar, so the model treats it as a smoother region.";
 
   return `<strong>Clicked pixel I[${sample.y}][${sample.x}]</strong><br>
 RGB = [${sample.red}, ${sample.green}, ${sample.blue}]<br>
@@ -700,6 +700,6 @@ generateSummaryButton.addEventListener("click", generateLearningSummary);
 useDemoFrame();
 addMessage(
   "assistant",
-  "<strong>Ask me anything about the current frame.</strong> I can explain the matrix, edge numbers, RGB channels, vectors, embeddings, or the math.",
+  "<strong>Welcome. Ask me anything about the current frame.</strong> I can explain pixels, color numbers, edges, vectors, embeddings, or the math in a beginner-friendly way.",
 );
 requestAnimationFrame(animationLoop);
