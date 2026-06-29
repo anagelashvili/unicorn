@@ -256,12 +256,13 @@ video,
 
 .inspector {
   display: grid;
-  grid-template-rows: auto minmax(420px, 1fr);
+  grid-template-rows: auto auto minmax(360px, 1fr);
   gap: 16px;
   min-width: 0;
 }
 
 .now-card,
+.agent-card,
 .chat-card,
 .lesson-panel {
   border: 1px solid var(--line);
@@ -271,6 +272,7 @@ video,
 }
 
 .now-card h2,
+.agent-card h2,
 .chat-header h2,
 .panel-title h2 {
   margin: 6px 0 0;
@@ -285,6 +287,55 @@ video,
   margin: 12px 0 0;
   color: var(--muted);
   line-height: 1.52;
+}
+
+.agent-card {
+  display: grid;
+  gap: 14px;
+}
+
+.agent-card h2 {
+  font-size: 1.28rem;
+}
+
+.agent-card p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.48;
+}
+
+.agent-card button {
+  width: fit-content;
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.workflow-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.workflow-strip span {
+  min-height: 74px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--muted);
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  padding: 9px;
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.workflow-strip strong {
+  color: var(--ink);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .formula,
@@ -638,7 +689,7 @@ video,
   }
 
   .inspector {
-    grid-template-rows: auto minmax(360px, auto);
+    grid-template-rows: auto auto minmax(360px, auto);
   }
 
   .chat-log {
@@ -671,7 +722,8 @@ video,
   }
 
   .quick-prompts,
-  .resource-strip {
+  .resource-strip,
+  .workflow-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

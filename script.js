@@ -26,6 +26,7 @@ const chatLog = document.querySelector("#chatLog");
 const chatForm = document.querySelector("#chatForm");
 const chatInput = document.querySelector("#chatInput");
 const lessonStepButtons = document.querySelectorAll(".lesson-step");
+const generateSummaryButton = document.querySelector("#generateSummary");
 
 const snapshotContext = snapshotCanvas.getContext("2d", { willReadFrequently: true });
 const overlayContext = overlayCanvas.getContext("2d");
@@ -643,6 +644,29 @@ function answerQuestion(question) {
   return `<strong>Short answer:</strong> this frame is being turned into numbers in stages: pixels become an RGB matrix, contrast creates contours, contours and color statistics become a vector, and that vector is what an ML system would compare against learned patterns. Try asking about "edges", "matrix", "RGB", "vector", or "math".<br><br><a href="https://www.tensorflow.org/tutorials/images/cnn" target="_blank" rel="noreferrer">Go deeper: image classification with CNNs</a>`;
 }
 
+function generateLearningSummary() {
+  if (!currentStats || !currentVector.length) {
+    addMessage(
+      "assistant",
+      "<strong>Learning summary:</strong> start the camera or use the demo frame first, then I can summarize the current visual data.",
+    );
+    return;
+  }
+
+  const pixels = currentStats.width * currentStats.height;
+  const strongest = strongestVectorComponent(currentVector);
+  const contourPercent = Math.round(currentStats.edgeRatio * 100);
+
+  addMessage(
+    "assistant",
+    `<strong>Learning summary from this frame</strong><br>
+Input: ${currentStats.width} x ${currentStats.height} frame with ${pixels.toLocaleString()} pixels.<br>
+Process: the app samples RGB values, compares neighboring pixels, estimates contour strength, and compresses the result into a 24-value teaching vector.<br>
+Output: average RGB is R ${currentStats.red.toFixed(1)}, G ${currentStats.green.toFixed(1)}, B ${currentStats.blue.toFixed(1)}. Strong contour samples are about ${contourPercent}%, and the strongest vector coordinate is v[${strongest.index}] = ${strongest.value.toFixed(3)}.<br><br>
+This is the same basic path a computer vision model follows: pixels -> features -> vector -> prediction or explanation.`,
+  );
+}
+
 chatForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const question = chatInput.value.trim();
@@ -668,6 +692,7 @@ startCameraButton.addEventListener("click", startCamera);
 captureButton.addEventListener("click", captureFrame);
 demoButton.addEventListener("click", useDemoFrame);
 liveButton.addEventListener("click", toggleLiveAnalysis);
+generateSummaryButton.addEventListener("click", generateLearningSummary);
 
 useDemoFrame();
 addMessage(
