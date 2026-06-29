@@ -230,7 +230,7 @@ h1 {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(350px, 430px);
   gap: 18px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .journey-strip {
@@ -309,7 +309,7 @@ h1 {
 
 .video-wrap {
   position: relative;
-  min-height: clamp(540px, calc(100vh - 220px), 760px);
+  min-height: clamp(360px, 52vh, 560px);
   overflow: hidden;
   border-radius: 14px;
   background: var(--black);
@@ -349,6 +349,48 @@ video,
 
 #overlayCanvas {
   mix-blend-mode: screen;
+}
+
+.stage-empty {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+  background:
+    radial-gradient(circle at center, rgba(139, 61, 255, 0.18), transparent 34%),
+    #111110;
+}
+
+.stage-empty.hidden {
+  display: none;
+}
+
+.stage-empty span {
+  color: var(--cyan);
+  font-weight: 840;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.stage-empty strong {
+  max-width: 520px;
+  color: var(--ink);
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  line-height: 1;
+}
+
+.stage-empty button {
+  margin-top: 8px;
+  min-height: 48px;
+  border-color: var(--violet);
+  background: var(--violet);
+  color: white;
 }
 
 .click-marker {
@@ -438,7 +480,7 @@ video,
 
 .inspector {
   display: grid;
-  grid-template-rows: auto auto minmax(360px, 1fr);
+  grid-template-rows: auto auto auto auto;
   gap: 16px;
   min-width: 0;
 }
@@ -1144,7 +1186,7 @@ h1 span {
 }
 
 .inspector {
-  grid-template-rows: auto auto auto minmax(360px, 1fr);
+  grid-template-rows: auto auto auto auto;
 }
 
 .stage-title-row {
@@ -1352,11 +1394,11 @@ h1 span {
   }
 
   .video-wrap {
-    min-height: min(720px, calc(100vh - 220px));
+    min-height: min(560px, calc(100vh - 220px));
   }
 
   .inspector {
-    grid-template-rows: auto auto minmax(360px, auto);
+    grid-template-rows: auto;
   }
 
   .chat-log {

@@ -3,6 +3,7 @@ const snapshotCanvas = document.querySelector("#snapshotCanvas");
 const overlayCanvas = document.querySelector("#overlayCanvas");
 const pixelCanvas = document.querySelector("#pixelCanvas");
 const videoWrap = document.querySelector(".video-wrap");
+const stageEmpty = document.querySelector("#stageEmpty");
 const clickMarker = document.querySelector("#clickMarker");
 const startCameraButton = document.querySelector("#startCamera");
 const captureButton = document.querySelector("#captureFrame");
@@ -121,6 +122,10 @@ function showToast(message) {
   }, 2200);
 }
 
+function setStageEmpty(isEmpty) {
+  stageEmpty.classList.toggle("hidden", !isEmpty);
+}
+
 function setStatus(message) {
   cameraStatus.textContent = message;
 }
@@ -135,6 +140,7 @@ async function startCamera() {
     video.srcObject = activeStream;
     await video.play();
     snapshotCanvas.style.display = "none";
+    setStageEmpty(false);
     captureButton.disabled = false;
     frozen = false;
     liveAnalysis = true;
@@ -158,6 +164,7 @@ function captureFrame() {
   snapshotContext.drawImage(video, 0, 0, snapshotCanvas.width, snapshotCanvas.height);
   currentImageData = snapshotContext.getImageData(0, 0, snapshotCanvas.width, snapshotCanvas.height);
   snapshotCanvas.style.display = "block";
+  setStageEmpty(false);
   frozen = true;
   liveAnalysis = false;
   liveButton.classList.remove("active");
@@ -172,6 +179,7 @@ function useDemoFrame() {
   renderDemoPerson(performance.now());
   currentImageData = snapshotContext.getImageData(0, 0, snapshotCanvas.width, snapshotCanvas.height);
   snapshotCanvas.style.display = "block";
+  setStageEmpty(false);
   frozen = false;
   liveAnalysis = true;
   liveButton.classList.add("active");
