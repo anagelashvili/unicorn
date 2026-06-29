@@ -13,9 +13,10 @@ This app makes the process visible and approachable. Users can start their camer
 ## Core Features
 
 - Live camera mode and animated demo mode
-- Pixel, matrix, edge, vector, and model lesson steps
+- Quest-style learning trail: Pixels, Numbers, Outlines, Fingerprint, and The Guess
 - Click-to-inspect pixel values and edge score
 - Technical readout for RGB averages, tensor shape, contour signal, and feature vector
+- Neural network sketch that shows how pixel clues travel through hidden layers toward a guess
 - AI Vision Tutor chat for explanations about matrix, RGB, edges, vectors, embeddings, and model logic
 - Learning summary generator based on the current frame analysis
 

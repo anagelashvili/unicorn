@@ -29,6 +29,8 @@ The app explains the process through five learning layers:
 4. **Vector** - visual features are compressed into a numeric feature vector.
 5. **Model** - the vector is connected to how an AI model would make predictions or explanations.
 
+In the interface, this is presented as a quest: **Pixels**, **Numbers**, **Outlines**, **Fingerprint**, and **The Guess**. This makes the experience feel more like discovery and less like a technical syllabus.
+
 ## 4. Target Users
 
 The main target users are:
@@ -45,11 +47,11 @@ The main target users are:
 
 The user can start the camera or use a built-in demo frame. The demo mode is useful if camera permission is blocked during presentation.
 
-### Step-by-Step Lesson Rail
+### Step-by-Step Quest Trail
 
-The top lesson buttons guide the user through the pipeline:
+The quest buttons guide the user through the pipeline:
 
-Pixels -> Matrix -> Edges -> Vector -> Model
+Pixels -> Numbers -> Outlines -> Fingerprint -> The Guess
 
 ### Real-Time Visual Overlay
 
@@ -75,6 +77,7 @@ The optional technical drawer shows:
 - contour signal
 - feature vector bars
 - vector code sketch
+- neural network sketch showing how image clues move through hidden layers
 
 ### AI Vision Tutor Agent
 
@@ -165,6 +168,8 @@ edge = difference between neighboring pixel brightness values
 vector = compressed feature representation of the frame
 ```
 
+The neural network sketch is a simplified visual explanation. It does not train a real model inside the browser, but it helps users understand the idea that image clues pass through layers before a model makes a guess.
+
 ## 9. Why This Product Has Value
 
 The app turns an abstract AI concept into an interactive experience. Instead of only reading about computer vision, users can see the process happening live.
@@ -218,7 +223,7 @@ Use this order during the presentation:
 1. Open the live website.
 2. Explain that the problem is AI being a black box.
 3. Click **Demo** or **Camera**.
-4. Show the lesson buttons: Pixels, Matrix, Edges, Vector, Model.
+4. Show the quest trail: Pixels, Numbers, Outlines, Fingerprint, The Guess.
 5. Click a contour in the frame.
 6. Explain the RGB and edge score.
 7. Open the AI Tutor Chat.
@@ -246,7 +251,7 @@ My solution is a web app that makes this process visible. The user can start the
 
 Here you can see the live frame. The numbers on top of the image show edge and contour signals. If I click on the image, the app shows the RGB values, brightness, and edge score of that pixel.
 
-The lesson buttons explain the process step by step: pixels, matrix, edges, vector, and model.
+The quest buttons explain the process step by step: pixels, numbers, outlines, fingerprint, and the final AI guess.
 
 ### AI Agent
 

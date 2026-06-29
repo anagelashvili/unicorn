@@ -11,16 +11,17 @@
       <header class="app-header">
         <div class="brand-block">
           <div class="brand-mark" aria-hidden="true">AI</div>
-          <p class="eyebrow">Friendly AI learning lab</p>
-          <h1>How AI Sees You</h1>
+          <p class="eyebrow"><span class="live-dot"></span>AI is watching - in a good way</p>
+          <h1>Your face.<br /><span>An AI's brain.</span><br />What does it actually see?</h1>
           <p class="header-copy">
-            Explore computer vision like a visual game: one frame becomes colors,
-            patterns, vectors, and a simple tutor explanation.
+            Point your camera at the lab and watch AI break one frame into pixels,
+            numbers, outlines, and a playful guess - live, with no coding needed.
           </p>
           <div class="learner-badges" aria-label="Learning promises">
-            <span>No coding needed</span>
-            <span>Demo works without camera</span>
-            <span>Ask the tutor anytime</span>
+            <span>About 10 minutes</span>
+            <span>Zero math panic</span>
+            <span>Your data stays local</span>
+            <span>Earn XP as you go</span>
           </div>
         </div>
         <div class="metrics" aria-label="Frame metrics">
@@ -30,38 +31,37 @@
         </div>
       </header>
 
-      <section class="journey-strip" aria-label="Learning journey">
-        <div>
-          <span>1</span>
-          <strong>Discover</strong>
-          <em>See what the frame contains as data.</em>
+      <section class="quest-card" aria-label="Learning quest">
+        <div class="quest-header">
+          <div>
+            <span class="kicker">Learning Trail</span>
+            <h2>A quest, not a syllabus</h2>
+            <p>Five steps named like discoveries. Finish each one to unlock the AI story.</p>
+          </div>
+          <div class="xp-pill" id="xpLabel">0 / 100 XP</div>
         </div>
-        <div>
-          <span>2</span>
-          <strong>Play</strong>
-          <em>Click edges and watch values change.</em>
-        </div>
-        <div>
-          <span>3</span>
-          <strong>Ask</strong>
-          <em>Let the tutor explain the confusing parts.</em>
-        </div>
-        <div>
-          <span>4</span>
-          <strong>Understand</strong>
-          <em>Connect pixels to real AI model logic.</em>
+        <div class="xp-track" aria-hidden="true"><span id="xpFill"></span></div>
+        <div class="quest-steps" aria-label="Quest progress">
+          <button class="quest-step active" type="button" data-lesson="0">
+            <span>🔬</span><strong>Pixels</strong><em>Tiny squares</em>
+          </button>
+          <button class="quest-step" type="button" data-lesson="1">
+            <span>🔢</span><strong>Numbers</strong><em>AI's language</em>
+          </button>
+          <button class="quest-step" type="button" data-lesson="2">
+            <span>🖍️</span><strong>Outlines</strong><em>Shapes emerge</em>
+          </button>
+          <button class="quest-step" type="button" data-lesson="3">
+            <span>🧬</span><strong>Fingerprint</strong><em>Your AI signature</em>
+          </button>
+          <button class="quest-step" type="button" data-lesson="4">
+            <span>🎯</span><strong>The guess</strong><em>AI decides</em>
+          </button>
         </div>
       </section>
 
       <section class="workbench" aria-label="Computer vision teaching workbench">
         <section class="vision-card" aria-label="Live vision view">
-          <div class="lesson-rail" aria-label="Guided lesson steps">
-            <button class="lesson-step active" type="button" data-lesson="0">1 Pixels</button>
-            <button class="lesson-step" type="button" data-lesson="1">2 Matrix</button>
-            <button class="lesson-step" type="button" data-lesson="2">3 Edges</button>
-            <button class="lesson-step" type="button" data-lesson="3">4 Vector</button>
-            <button class="lesson-step" type="button" data-lesson="4">5 Model</button>
-          </div>
           <div class="video-wrap">
             <video id="camera" autoplay playsinline muted></video>
             <canvas id="snapshotCanvas"></canvas>
@@ -82,7 +82,10 @@
 
         <aside class="inspector" aria-label="Current explanation and chat">
           <section class="now-card">
-            <span class="kicker">Current layer</span>
+            <div class="stage-title-row">
+              <span class="stage-number" id="stageNumber">1</span>
+              <span class="kicker">Current quest step</span>
+            </div>
             <h2 id="layerTitle">Contours from pixel change</h2>
             <p id="layerCopy">
               Bright numbers appear where neighboring pixels change sharply. Those places are likely
@@ -94,10 +97,10 @@
 
           <section class="agent-card" aria-label="AI tutor agent workflow">
             <div>
-              <span class="kicker">AI Agent</span>
-              <h2>Vision Tutor Agent</h2>
+              <span class="kicker"><span class="live-dot"></span>Watching the frame right now</span>
+              <h2>Nova - your AI hype guide</h2>
               <p>
-                The tutor turns the current frame into a friendly explanation, so the
+                Nova turns the current frame into a friendly explanation, so the
                 numbers feel like clues instead of a wall of math.
               </p>
             </div>
@@ -106,7 +109,17 @@
               <span><strong>Process</strong>Analyze + explain</span>
               <span><strong>Output</strong>Learning summary</span>
             </div>
-            <button id="generateSummary" type="button">Generate Learning Summary</button>
+            <button id="generateSummary" type="button">What did my brain just learn?</button>
+          </section>
+
+          <section class="badge-card" aria-label="Unlocked badges">
+            <span class="kicker">Badges</span>
+            <h2>Unlock curiosity</h2>
+            <div class="badge-grid">
+              <span class="earned">First glimpse<em>Frame loaded</em></span>
+              <span id="pixelBadge">Pixel pioneer<em>Click your first pixel</em></span>
+              <span id="summaryBadge">Mind mapper<em>Generate a summary</em></span>
+            </div>
           </section>
 
           <section class="chat-card" aria-label="Ask for explanation">
@@ -120,9 +133,9 @@
               <div class="chat-body">
                 <div class="quick-prompts" aria-label="Suggested questions">
                   <button type="button" data-prompt="Explain the matrix">Matrix</button>
-                  <button type="button" data-prompt="What are the edge numbers?">Edges</button>
-                  <button type="button" data-prompt="Explain the vector">Vector</button>
-                  <button type="button" data-prompt="Explain this frame mathematically">Math</button>
+                  <button type="button" data-prompt="What are the edge numbers?">Outlines</button>
+                  <button type="button" data-prompt="Explain the vector">Fingerprint</button>
+                  <button type="button" data-prompt="Make it simpler">Simpler</button>
                 </div>
                 <div class="resource-strip" aria-label="Detailed learning links">
                   <a href="https://www.tensorflow.org/tutorials/images/cnn" target="_blank" rel="noreferrer">CNNs</a>
@@ -150,23 +163,23 @@
       <details class="technical-drawer">
         <summary>
           <span>
-            <span class="kicker">Optional</span>
-            <strong>Show technical readout</strong>
+            <span class="kicker">For the curious ones</span>
+            <strong>Go deeper into the AI brain</strong>
           </span>
         </summary>
         <section class="learning" aria-label="Detailed explanation from this frame">
           <article class="lesson-panel main-lesson">
             <div class="panel-title">
               <span class="kicker">Based on this frame</span>
-              <h2>What the computer is reading</h2>
+              <h2>What did the AI notice?</h2>
             </div>
             <div class="lesson-list" id="lessonList"></div>
           </article>
 
           <article class="lesson-panel">
             <div class="panel-title">
-              <span class="kicker">Matrix sample</span>
-              <h2>Pixel Matrix</h2>
+              <span class="kicker">Number grid</span>
+              <h2>AI's language</h2>
               <span id="tensorShape">shape: H x W x 3</span>
             </div>
             <canvas id="pixelCanvas" width="520" height="300"></canvas>
@@ -176,13 +189,38 @@
           <article class="lesson-panel">
             <div class="panel-title">
               <span class="kicker">Feature vector</span>
-              <h2>Embedding Sketch</h2>
+              <h2>AI Fingerprint</h2>
               <span id="confidenceLabel">signal: --</span>
             </div>
             <div class="vector-bars" id="vectorBars"></div>
             <pre class="vector-code" id="vectorCode">v = [waiting_for_frame]</pre>
             <div class="concept-meter">
               <div class="meter-fill" id="confidenceFill"></div>
+            </div>
+          </article>
+
+          <article class="lesson-panel neural-panel">
+            <div class="panel-title">
+              <span class="kicker">Neural network</span>
+              <h2>How the guess travels</h2>
+              <span id="networkPulse">thinking</span>
+            </div>
+            <div class="network-sketch" aria-label="Neural network sketch">
+              <div class="network-layer">
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <div class="network-lines" aria-hidden="true"></div>
+              <div class="network-layer middle">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="network-lines" aria-hidden="true"></div>
+              <div class="network-layer output">
+                <span></span><span></span>
+              </div>
+            </div>
+            <div class="network-copy">
+              Pixel clues become a vector. A neural network passes that vector through
+              hidden layers until the model can make a guess.
             </div>
           </article>
         </section>

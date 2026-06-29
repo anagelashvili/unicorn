@@ -26,8 +26,13 @@ const chatLog = document.querySelector("#chatLog");
 const chatForm = document.querySelector("#chatForm");
 const chatInput = document.querySelector("#chatInput");
 const tutorDetails = document.querySelector("#tutorDetails");
-const lessonStepButtons = document.querySelectorAll(".lesson-step");
+const lessonStepButtons = document.querySelectorAll(".quest-step");
 const generateSummaryButton = document.querySelector("#generateSummary");
+const xpLabel = document.querySelector("#xpLabel");
+const xpFill = document.querySelector("#xpFill");
+const stageNumber = document.querySelector("#stageNumber");
+const pixelBadge = document.querySelector("#pixelBadge");
+const summaryBadge = document.querySelector("#summaryBadge");
 
 const snapshotContext = snapshotCanvas.getContext("2d", { willReadFrequently: true });
 const overlayContext = overlayCanvas.getContext("2d");
@@ -46,40 +51,42 @@ let scanOffset = 0;
 let activeLessonIndex = 0;
 let autoCycleLessons = false;
 let selectedPoint = null;
+let clickedPixel = localStorage.getItem("clickedPixel") === "true";
+let generatedSummary = localStorage.getItem("generatedSummary") === "true";
 
 const stages = [
   {
     key: "pixels",
-    title: "Start with tiny color clues",
-    copy: "Click the image. The tutor will pick one pixel and show the color numbers hidden inside it.",
+    title: "Pixels - tiny squares start the story",
+    copy: "Every image begins as small color squares. Click the frame and Nova will show the hidden color numbers.",
     formula: "I[y][x] = [R, G, B]",
   },
   {
     key: "matrix",
-    title: "The frame becomes a color grid",
+    title: "Numbers - AI's first language",
     copy:
-      "Before AI understands meaning, it sees a neat grid: rows, columns, and three color channels.",
+      "Before AI understands a face or object, it reads a grid of numbers: row, column, and color channel.",
     formula: "frame.shape = [height, width, 3]",
   },
   {
     key: "edges",
-    title: "Edges are where things change",
+    title: "Outlines - where shapes appear",
     copy:
-      "The bright numbers appear where nearby pixels are different. Those changes help AI notice outlines and shapes.",
+      "Where light meets dark, AI draws a clue line. These outline clues help shapes emerge from the pixels.",
     formula: "edge(x,y) = |I(x,y)-I(x+1,y)| + |I(x,y)-I(x,y+1)|",
   },
   {
     key: "vector",
-    title: "Patterns become a short number list",
+    title: "Fingerprint - your AI signature",
     copy:
-      "The app compresses the frame into a vector, which is like a tiny numeric summary of what the image looks like.",
+      "The frame becomes a feature vector: a compact list of clues that acts like an AI fingerprint for this moment.",
     formula: "v = normalize(features(I))",
   },
   {
     key: "model",
-    title: "A model can compare the pattern",
+    title: "The guess - AI compares patterns",
     copy:
-      "A real AI model would compare this vector with patterns it learned before, then create a label or explanation.",
+      "A real model compares this fingerprint with patterns it learned before, then makes a prediction or explanation.",
     formula: "prediction = softmax(Wv + b)",
   },
 ];
@@ -422,6 +429,8 @@ function updateStageText() {
   layerTitle.textContent = stage.title;
   layerCopy.textContent = stage.copy;
   formulaBox.textContent = stage.formula;
+  stageNumber.textContent = activeLessonIndex + 1;
+  updateQuestProgress();
 }
 
 function setActiveLesson(index, shouldExplain = true) {
@@ -442,7 +451,18 @@ function setActiveLesson(index, shouldExplain = true) {
 function syncLessonButtons() {
   lessonStepButtons.forEach((button, index) => {
     button.classList.toggle("active", index === activeLessonIndex);
+    button.classList.toggle("complete", index < activeLessonIndex);
   });
+}
+
+function updateQuestProgress() {
+  const baseXp = (activeLessonIndex + 1) * 16;
+  const bonusXp = (clickedPixel ? 10 : 0) + (generatedSummary ? 10 : 0);
+  const xp = Math.min(100, baseXp + bonusXp);
+  xpLabel.textContent = `${xp} / 100 XP`;
+  xpFill.style.width = `${xp}%`;
+  pixelBadge.classList.toggle("earned", clickedPixel);
+  summaryBadge.classList.toggle("earned", generatedSummary);
 }
 
 function drawPerceptionOverlay(imageData, now) {
@@ -554,6 +574,8 @@ function inspectPoint(event) {
   const sample = samplePixel(currentImageData, imageX, imageY);
 
   selectedPoint = { ...sample, screenX: clampedX, screenY: clampedY };
+  clickedPixel = true;
+  localStorage.setItem("clickedPixel", "true");
   clickMarker.style.display = "block";
   clickMarker.style.left = `${clampedX}px`;
   clickMarker.style.top = `${clampedY}px`;
@@ -594,7 +616,7 @@ function explainClickedSample(sample) {
         ? "That is a medium clue. The nearby pixels are changing a little, but not dramatically."
         : "That is a calm area. Nearby pixels are similar, so the model treats it as a smoother region.";
 
-  return `<strong>Clicked pixel I[${sample.y}][${sample.x}]</strong><br>
+  return `<strong>Pixel clue unlocked: I[${sample.y}][${sample.x}]</strong><br>
 RGB = [${sample.red}, ${sample.green}, ${sample.blue}]<br>
 brightness = ${sample.brightness.toFixed(1)}<br>
 edge score = ${sample.edge.toFixed(1)}<br><br>
@@ -642,11 +664,18 @@ function answerQuestion(question) {
     return `<strong>ML pipeline:</strong> a vision model starts with pixels, learns filters for edges and textures, combines those into shapes and parts, then compresses the result into an embedding vector. A classifier or language model can then use that vector to describe what it sees.<br><br><a href="https://www.tensorflow.org/tutorials/images/cnn" target="_blank" rel="noreferrer">Go deeper: TensorFlow CNN tutorial</a>`;
   }
 
+  if (q.includes("simple") || q.includes("simpler")) {
+    return `<strong>Nova version:</strong> AI does not magically understand the image. First it turns the picture into color numbers. Then it looks for changes, like where bright pixels meet dark pixels. Those changes become clues, and the clues become a short number list the model can compare with things it learned before.`;
+  }
+
   return `<strong>Short answer:</strong> this frame is being turned into numbers in stages: pixels become an RGB matrix, contrast creates contours, contours and color statistics become a vector, and that vector is what an ML system would compare against learned patterns. Try asking about "edges", "matrix", "RGB", "vector", or "math".<br><br><a href="https://www.tensorflow.org/tutorials/images/cnn" target="_blank" rel="noreferrer">Go deeper: image classification with CNNs</a>`;
 }
 
 function generateLearningSummary() {
   tutorDetails.open = true;
+  generatedSummary = true;
+  localStorage.setItem("generatedSummary", "true");
+  updateQuestProgress();
 
   if (!currentStats || !currentVector.length) {
     addMessage(
@@ -662,7 +691,7 @@ function generateLearningSummary() {
 
   addMessage(
     "assistant",
-    `<strong>Learning summary from this frame</strong><br>
+    `<strong>What your brain just learned</strong><br>
 Input: ${currentStats.width} x ${currentStats.height} frame with ${pixels.toLocaleString()} pixels.<br>
 Process: the app samples RGB values, compares neighboring pixels, estimates contour strength, and compresses the result into a 24-value teaching vector.<br>
 Output: average RGB is R ${currentStats.red.toFixed(1)}, G ${currentStats.green.toFixed(1)}, B ${currentStats.blue.toFixed(1)}. Strong contour samples are about ${contourPercent}%, and the strongest vector coordinate is v[${strongest.index}] = ${strongest.value.toFixed(3)}.<br><br>
@@ -700,6 +729,6 @@ generateSummaryButton.addEventListener("click", generateLearningSummary);
 useDemoFrame();
 addMessage(
   "assistant",
-  "<strong>Welcome. Ask me anything about the current frame.</strong> I can explain pixels, color numbers, edges, vectors, embeddings, or the math in a beginner-friendly way.",
+  "<strong>Nova here. Ask me anything about the current frame.</strong> I can explain pixels, color numbers, outlines, fingerprints, or the math in a beginner-friendly way.",
 );
 requestAnimationFrame(animationLoop);
