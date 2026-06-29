@@ -9,14 +9,18 @@
   <body>
     <main class="app-shell">
       <header class="app-header">
-        <div>
+        <div class="brand-block">
+          <div class="brand-mark" aria-hidden="true">AI</div>
           <p class="eyebrow">Live computer perception</p>
           <h1>How AI Sees You</h1>
+          <p class="header-copy">
+            A live visual lab that turns one camera frame into pixels, edges, vectors, and an AI tutor explanation.
+          </p>
         </div>
         <div class="metrics" aria-label="Frame metrics">
-          <span id="cameraStatus">demo</span>
-          <span id="resolutionLabel">640 x 400</span>
-          <span id="fpsLabel">24 fps</span>
+          <span><strong>Status</strong><em id="cameraStatus">demo</em></span>
+          <span><strong>Frame</strong><em id="resolutionLabel">640 x 400</em></span>
+          <span><strong>Rate</strong><em id="fpsLabel">24 fps</em></span>
         </div>
       </header>
 
@@ -40,7 +44,7 @@
             </div>
           </div>
           <div class="control-bar" aria-label="Camera controls">
-            <button id="startCamera" type="button">Start Camera</button>
+            <button id="startCamera" type="button">Camera</button>
             <button id="captureFrame" type="button" disabled>Freeze</button>
             <button id="demoFrame" type="button">Demo</button>
             <button id="liveAnalysis" class="active" type="button">Live</button>
@@ -77,7 +81,7 @@
           </section>
 
           <section class="chat-card" aria-label="Ask for explanation">
-            <details>
+            <details id="tutorDetails">
               <summary>
                 <span>
                   <span class="kicker">AI Tutor Chat</span>

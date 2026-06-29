@@ -25,6 +25,7 @@ const confidenceFill = document.querySelector("#confidenceFill");
 const chatLog = document.querySelector("#chatLog");
 const chatForm = document.querySelector("#chatForm");
 const chatInput = document.querySelector("#chatInput");
+const tutorDetails = document.querySelector("#tutorDetails");
 const lessonStepButtons = document.querySelectorAll(".lesson-step");
 const generateSummaryButton = document.querySelector("#generateSummary");
 
@@ -645,6 +646,8 @@ function answerQuestion(question) {
 }
 
 function generateLearningSummary() {
+  tutorDetails.open = true;
+
   if (!currentStats || !currentVector.length) {
     addMessage(
       "assistant",
