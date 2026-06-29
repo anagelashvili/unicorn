@@ -11,12 +11,17 @@
       <header class="app-header">
         <div class="brand-block">
           <div class="brand-mark" aria-hidden="true">AI</div>
-          <p class="eyebrow"><span class="live-dot"></span>AI is watching - in a good way</p>
-          <h1>Your face.<br /><span>An AI's brain.</span><br />What does it actually see?</h1>
+          <p class="eyebrow"><span class="live-dot"></span>Friendly AI playground</p>
+          <h1>Learn <span>AI vision</span> by playing with one image.</h1>
           <p class="header-copy">
-            Point your camera at the lab and watch AI break one frame into pixels,
-            numbers, outlines, and a playful guess - live, with no coding needed.
+            Start with the demo, click the picture, and Nova will show how AI turns
+            colors into outlines, patterns, a neural network path, and a guess.
           </p>
+          <div class="hero-actions" aria-label="Start actions">
+            <button type="button" data-action="demo">Start with demo</button>
+            <button type="button" data-action="camera">Use my camera</button>
+            <button type="button" data-action="summary">Show what I learned</button>
+          </div>
           <div class="learner-badges" aria-label="Learning promises">
             <span>About 10 minutes</span>
             <span>Zero math panic</span>
@@ -41,6 +46,9 @@
           <div class="xp-pill" id="xpLabel">0 / 100 XP</div>
         </div>
         <div class="xp-track" aria-hidden="true"><span id="xpFill"></span></div>
+        <div class="quest-feedback" id="questFeedback">
+          Start with the demo, then click a bright part of the image.
+        </div>
         <div class="quest-steps" aria-label="Quest progress">
           <button class="quest-step active" type="button" data-lesson="0">
             <span>🔬</span><strong>Pixels</strong><em>Tiny squares</em>
@@ -69,7 +77,7 @@
             <div class="click-marker" id="clickMarker" aria-hidden="true"></div>
             <div class="stage-hint">
               <span>Try it</span>
-              <strong>click a bright edge</strong>
+              <strong>click anywhere on the picture</strong>
             </div>
           </div>
           <div class="control-bar" aria-label="Camera controls">
@@ -226,6 +234,7 @@
         </section>
       </details>
     </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="script.js"></script>
   </body>

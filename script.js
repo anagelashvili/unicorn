@@ -33,6 +33,9 @@ const xpFill = document.querySelector("#xpFill");
 const stageNumber = document.querySelector("#stageNumber");
 const pixelBadge = document.querySelector("#pixelBadge");
 const summaryBadge = document.querySelector("#summaryBadge");
+const questFeedback = document.querySelector("#questFeedback");
+const toast = document.querySelector("#toast");
+const heroActionButtons = document.querySelectorAll("[data-action]");
 
 const snapshotContext = snapshotCanvas.getContext("2d", { willReadFrequently: true });
 const overlayContext = overlayCanvas.getContext("2d");
@@ -70,6 +73,7 @@ function saveFlag(key) {
 
 let clickedPixel = readSavedFlag("clickedPixel");
 let generatedSummary = readSavedFlag("generatedSummary");
+let toastTimer = null;
 
 const stages = [
   {
@@ -108,12 +112,22 @@ const stages = [
   },
 ];
 
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("visible");
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => {
+    toast.classList.remove("visible");
+  }, 2200);
+}
+
 function setStatus(message) {
   cameraStatus.textContent = message;
 }
 
 async function startCamera() {
   try {
+    showToast("Opening your camera. The image stays on this device.");
     activeStream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: "user" },
       audio: false,
@@ -126,12 +140,14 @@ async function startCamera() {
     liveAnalysis = true;
     liveButton.classList.add("active");
     setStatus("camera");
+    showToast("Camera is on. Click the picture to unlock pixel clues.");
   } catch (error) {
     setStatus("blocked");
     layerTitle.textContent = "Camera blocked";
     layerCopy.textContent =
       "No stress. You can use Demo mode instead, and the learning experience still works.";
     console.error(error);
+    showToast("Camera was blocked, so use Demo mode instead.");
   }
 }
 
@@ -147,6 +163,7 @@ function captureFrame() {
   liveButton.classList.remove("active");
   setStatus("frozen");
   analyzeFrame(currentImageData);
+  showToast("Frame frozen. Now you can inspect it slowly.");
 }
 
 function useDemoFrame() {
@@ -160,6 +177,7 @@ function useDemoFrame() {
   liveButton.classList.add("active");
   setStatus("demo");
   analyzeFrame(currentImageData);
+  showToast("Demo loaded. Click the image to inspect a pixel.");
 }
 
 function toggleLiveAnalysis() {
@@ -168,6 +186,7 @@ function toggleLiveAnalysis() {
   snapshotCanvas.style.display = activeStream ? "none" : "block";
   liveButton.classList.toggle("active", liveAnalysis);
   setStatus(liveAnalysis ? (activeStream ? "camera" : "demo") : "paused");
+  showToast(liveAnalysis ? "Live analysis is moving again." : "Paused. The frame will stay calmer.");
 }
 
 function renderDemoPerson(time) {
@@ -447,6 +466,7 @@ function updateStageText() {
   layerCopy.textContent = stage.copy;
   formulaBox.textContent = stage.formula;
   stageNumber.textContent = activeLessonIndex + 1;
+  questFeedback.textContent = `${stage.title}: ${stage.copy}`;
   updateQuestProgress();
 }
 
@@ -462,6 +482,8 @@ function setActiveLesson(index, shouldExplain = true) {
       "assistant",
       `<strong>Lesson ${index + 1}: ${stage.title}</strong><br>${stage.copy}<br><br><code>${stage.formula}</code>`,
     );
+    tutorDetails.open = true;
+    showToast(`${stage.title} unlocked.`);
   }
 }
 
@@ -602,6 +624,7 @@ function inspectPoint(event) {
   syncLessonButtons();
   updateStageText();
   addMessage("assistant", explainClickedSample(sample));
+  showToast("Pixel clue unlocked. Nova explained it in the chat.");
 }
 
 function samplePixel(imageData, x, y) {
@@ -693,6 +716,7 @@ function generateLearningSummary() {
   generatedSummary = true;
   saveFlag("generatedSummary");
   updateQuestProgress();
+  showToast("Mind mapper badge unlocked.");
 
   if (!currentStats || !currentVector.length) {
     addMessage(
@@ -734,6 +758,15 @@ document.querySelectorAll("[data-prompt]").forEach((button) => {
 
 lessonStepButtons.forEach((button, index) => {
   button.addEventListener("click", () => setActiveLesson(index));
+});
+
+heroActionButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const action = button.dataset.action;
+    if (action === "demo") useDemoFrame();
+    if (action === "camera") startCamera();
+    if (action === "summary") generateLearningSummary();
+  });
 });
 
 videoWrap.addEventListener("click", inspectPoint);

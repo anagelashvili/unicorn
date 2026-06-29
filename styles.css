@@ -950,6 +950,29 @@ h1 span {
   line-height: 1.48;
 }
 
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.hero-actions button {
+  min-height: 48px;
+  border-radius: 12px;
+  padding: 0 18px;
+  background: #20201f;
+  color: var(--ink);
+  border-color: #45423f;
+  font-size: 0.96rem;
+}
+
+.hero-actions button:first-child {
+  background: var(--violet);
+  border-color: var(--violet);
+  color: white;
+}
+
 .learner-badges {
   position: absolute;
   left: 36px;
@@ -1001,6 +1024,17 @@ h1 span {
   margin: 0;
   color: var(--muted);
   font-weight: 680;
+}
+
+.quest-feedback {
+  border: 1px solid rgba(139, 61, 255, 0.38);
+  border-radius: 12px;
+  background: rgba(139, 61, 255, 0.1);
+  color: #d5c3ff;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  font-weight: 720;
+  line-height: 1.38;
 }
 
 .xp-pill {
@@ -1263,6 +1297,32 @@ h1 span {
     transform: scale(1.08);
     opacity: 1;
   }
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  z-index: 50;
+  width: min(520px, calc(100vw - 28px));
+  transform: translate(-50%, 18px);
+  border: 1px solid rgba(139, 61, 255, 0.5);
+  border-radius: 14px;
+  background: rgba(20, 20, 19, 0.94);
+  color: var(--ink);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  padding: 13px 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+  font-weight: 760;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 @media (max-width: 1180px) {
