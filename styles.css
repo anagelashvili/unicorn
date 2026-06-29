@@ -997,6 +997,9 @@ h1 span {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 24px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-actions button {
@@ -1016,9 +1019,13 @@ h1 span {
 }
 
 .learner-badges {
-  position: static;
+  position: static !important;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  clear: both;
   padding: 0;
-  margin-top: 18px;
+  margin-top: 0;
 }
 
 .learner-badges span {
