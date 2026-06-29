@@ -51,8 +51,25 @@ let scanOffset = 0;
 let activeLessonIndex = 0;
 let autoCycleLessons = false;
 let selectedPoint = null;
-let clickedPixel = localStorage.getItem("clickedPixel") === "true";
-let generatedSummary = localStorage.getItem("generatedSummary") === "true";
+
+function readSavedFlag(key) {
+  try {
+    return window.localStorage.getItem(key) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function saveFlag(key) {
+  try {
+    window.localStorage.setItem(key, "true");
+  } catch {
+    // The app still works if the browser blocks local storage.
+  }
+}
+
+let clickedPixel = readSavedFlag("clickedPixel");
+let generatedSummary = readSavedFlag("generatedSummary");
 
 const stages = [
   {
@@ -575,7 +592,7 @@ function inspectPoint(event) {
 
   selectedPoint = { ...sample, screenX: clampedX, screenY: clampedY };
   clickedPixel = true;
-  localStorage.setItem("clickedPixel", "true");
+  saveFlag("clickedPixel");
   clickMarker.style.display = "block";
   clickMarker.style.left = `${clampedX}px`;
   clickMarker.style.top = `${clampedY}px`;
@@ -674,7 +691,7 @@ function answerQuestion(question) {
 function generateLearningSummary() {
   tutorDetails.open = true;
   generatedSummary = true;
-  localStorage.setItem("generatedSummary", "true");
+  saveFlag("generatedSummary");
   updateQuestProgress();
 
   if (!currentStats || !currentVector.length) {
