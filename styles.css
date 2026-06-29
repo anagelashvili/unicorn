@@ -895,18 +895,18 @@ video,
 }
 
 .brand-block {
-  min-height: 430px;
+  min-height: 0;
   background:
     linear-gradient(135deg, rgba(28, 28, 27, 0.96), rgba(20, 20, 19, 0.92)),
     radial-gradient(circle at 78% 20%, rgba(139, 61, 255, 0.26), transparent 30%);
-  padding: 34px 36px 34px;
+  padding: 34px 36px;
 }
 
 .brand-block::after {
   height: 1px;
   left: 0;
   right: 0;
-  bottom: 74px;
+  bottom: 0;
   width: 100%;
   background: var(--line);
 }
@@ -974,11 +974,9 @@ h1 span {
 }
 
 .learner-badges {
-  position: absolute;
-  left: 36px;
-  right: 36px;
-  bottom: 20px;
+  position: static;
   padding: 0;
+  margin-top: 18px;
 }
 
 .learner-badges span {
@@ -1206,6 +1204,7 @@ h1 span {
 
 .badge-grid {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -1214,8 +1213,11 @@ h1 span {
   border-radius: 12px;
   background: #151514;
   color: #77716d;
-  padding: 12px;
+  min-height: 76px;
+  padding: 12px 13px;
   font-weight: 820;
+  display: grid;
+  align-content: center;
 }
 
 .badge-grid span.earned {
@@ -1370,7 +1372,7 @@ h1 span {
 
   .brand-block {
     min-height: auto;
-    padding: 24px 18px 112px;
+    padding: 24px 18px;
   }
 
   .brand-mark {
@@ -1385,7 +1387,7 @@ h1 span {
     left: 18px;
     right: auto;
     width: calc(100% - 36px);
-    bottom: 92px;
+    bottom: 0;
   }
 
   h1 {
@@ -1406,6 +1408,10 @@ h1 span {
   .quest-steps {
     grid-template-columns: 1fr;
     overflow: visible;
+  }
+
+  .badge-grid {
+    grid-template-columns: 1fr;
   }
 
   .quest-step {
